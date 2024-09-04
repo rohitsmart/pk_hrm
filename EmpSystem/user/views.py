@@ -49,7 +49,5 @@ def login_view(request):
             'technical_desc': str(e)
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# Ensure GenerateCredential is defined or remove this import if not used.
 def GenerateCredential(request):
-    # Implement the view logic here
     pass
