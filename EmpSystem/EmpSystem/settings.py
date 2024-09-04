@@ -93,10 +93,10 @@ WSGI_APPLICATION = 'EmpSystem.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql.connector.django',
         'NAME': 'empsystem',
-        'USER': 'root',
-        'PASSWORD': 'Ryzen123',
+        'USER': 'perfectkode',
+        'PASSWORD': '12345678',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -143,3 +143,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+APPEND_SLASH = False
+AUTHENTICATION_BACKENDS = ['user.auth_backends.EmailBackend']
