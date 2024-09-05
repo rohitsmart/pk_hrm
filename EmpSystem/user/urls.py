@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import login_view,hello
+from .views import login_view,hello,GenerateCredential
 
 urlpatterns = [
     path('login', login_view, name='login'),
     path('hello', hello, name='hello'),
+    path('GnerateCredential',GenerateCredential)
 
 ]

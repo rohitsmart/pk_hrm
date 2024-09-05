@@ -91,10 +91,10 @@ WSGI_APPLICATION = 'EmpSystem.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql.connector.django',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'empsystem',
-        'USER': 'perfectkode',
-        'PASSWORD': '12345678',
+        'USER': 'root',
+        'PASSWORD': 'Ryzen123',
         'HOST': 'localhost',
         'PORT': '3306',
     }
