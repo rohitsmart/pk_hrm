@@ -1,14 +1,13 @@
-# user/views.py
-from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
-from user.models import User
-from user.serializers import LoginSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.exceptions import ValidationError
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from user.serializers import LoginSerializer
+
 
 @api_view(['POST'])
 def login_view(request):
@@ -49,5 +48,8 @@ def login_view(request):
             'technical_desc': str(e)
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-def GenerateCredential(request):
-    pass
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def hello(request):
+    user = request.user
+    return Response({"message": f"Hello, {user.username}! You are authenticated."})

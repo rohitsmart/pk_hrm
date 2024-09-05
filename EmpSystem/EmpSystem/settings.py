@@ -47,10 +47,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.openapi.AutoSchema',
-
-
 }
+
 SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
@@ -145,3 +143,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 APPEND_SLASH = False
 AUTHENTICATION_BACKENDS = ['user.auth_backends.EmailBackend']
+AUTH_USER_MODEL = 'user.User'
+

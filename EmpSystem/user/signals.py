@@ -6,6 +6,10 @@ from django.contrib.auth.hashers import make_password
 
 @receiver(post_migrate)
 def create_entry(sender, **kwargs):
-    
-  if not User.objects.filter(username="admin").exists():
-     User.objects.create(username="admin",password=make_password("admin@123"),role="admin",email='admin@gmail.com')
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create(
+            username="admin",
+            password=make_password("admin@123"),
+            role="admin",
+            email='admin@gmail.com'
+        )
