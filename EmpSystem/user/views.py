@@ -6,8 +6,8 @@ from django.core.exceptions import ValidationError
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from user.serializers import LoginSerializer
-from user.serializers import UserSerializer
+from user.serializers import LoginSerializer,profileSerializer,UserSerializer
+from user.models import User,ProfileCounter
 from user.permissions import IsAdminUser
 
 @api_view(['POST'])
@@ -66,3 +66,38 @@ def add_employee(request):
             'data': serializer.data
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def createProfile(request):
+  email=request.data.get('email')
+  if not User.objects.filter(email=email): 
+    return Response("credentials not generated") 
+  else:
+    serializer = profileSerializer(data=request.data)
+    if serializer.is_valid():
+            try:
+                latest_id = ProfileCounter.objects.latest('EmpId')
+                next_id = latest_id.EmpId + 1
+            except ProfileCounter.DoesNotExist:
+                next_id = 1000
+            serializer.save(empid=next_id)
+
+            new_empId=ProfileCounter(EmpId=next_id)
+            new_empId.save()       
+    return Response({'message': 'Profile created successfully'}, status=201)
+  
+@api_view(['PATCH'])
+@permission_classes([IsAdminUser])
+def UpdateRole(request):
+    role=request.data.get('role')
+    if not role=='admin':
+     email=request.data.get('email')
+     user=User.objects.get(email=email)
+     serialzer=UserSerializer(user,data=request.data,partial=True)
+     if serialzer.is_valid():
+        serialzer.save()
+        return Response({"message:role updated sucessfully"},status=status.HTTP_204_NO_CONTENT)
+    
+    return Response({"message:unable to update profile!! invalid email or no credentials exist for this email"},status=status.HTTP_404_NOT_FOUND)
+   

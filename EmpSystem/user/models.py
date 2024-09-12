@@ -24,3 +24,18 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+
+class profile(models.Model):
+    userId=models.ForeignKey(User,on_delete=models.CASCADE)
+    name=models.CharField(max_length=30)
+    contact=models.CharField(max_length=15)
+    designation=models.CharField(max_length=40)
+    address=models.CharField(max_length=80)
+    doj=models.DateField()
+    salary=models.CharField(max_length=50)
+    qualification=models.CharField(max_length=50)
+    email=models.EmailField(unique=True)
+    empid=models.IntegerField(unique=True,default=1000,primary_key=True)
+class ProfileCounter(models.Model):
+  
+    EmpId=models.IntegerField(unique=True,primary_key= True,default=1000)    
